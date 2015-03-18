@@ -1,0 +1,17 @@
+Using Django, Tastypie, Angular and Highcharts
+
+Django 
+Models, database
+
+Tastypie for organizing the data to go into the db and for displaying on the frontend
+	need to parse the data to go into the database
+
+
+Angular form for data submission
+	use a directive to use with highcharts
+
+Highcharts displays the data 
+
+Automate deployment using fabric - only for use on the server
+
+Use logging to document bugs in the coding process
