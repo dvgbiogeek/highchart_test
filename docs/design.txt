@@ -1,5 +1,6 @@
 Using Django, Tastypie, Angular and Highcharts
 
+General Wants and Desires
 Django 
 Models, database
 
@@ -14,4 +15,19 @@ Highcharts displays the data
 
 Automate deployment using fabric - only for use on the server
 
-Use logging to document bugs in the coding process
+Use logging to document bugs in the coding process and production
+
+Brainstorming about Structure
+Home page:
+	welcome
+	form for protein name and sequence
+		extras - link to NCBI for sequences, link for sample protein
+	Form as a directive/Django form
+		if Django form - use python to parse the data prior to sending to the db or displaying data at a url
+		if Angular - use javascript to remove whitespace and send through tastypie for displaying
+
+Page for displaying data - charts
+	start with showing amino acid breakdown
+	extras - determine charge, determine potential phosporylation sites
+
+Hidden url for storing JSON of data for the chart to access
