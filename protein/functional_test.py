@@ -72,9 +72,9 @@ class SetUpTest(unittest.TestCase):
         current_url = self.browser.current_url
         self.assertRegex(current_url, 'protein/.+')
 
-        self.find_text_in_body('Thanks!')
+        self.find_text_in_body('name')
 
-        self.fail('Finish the test!')
+        # self.fail('Finish the test!')
 
     def test_cannot_add_empty_entries(self):
         # some validation effort to make sure empty entries throw an error
@@ -88,8 +88,13 @@ class SetUpTest(unittest.TestCase):
         submit_button.click()
 
         # An error message occurs saying a sequence is needed to proceed
+        self.find_text_in_body('Please add a name and sequence.')
 
-        self.fail('More test!')
+        # The page does not redirect to the success page
+        current_url = self.browser.current_url
+        self.assertEqual(current_url, 'http://localhost:8000/protein/')
+        
+        # self.fail('More test!')
 
 
 if __name__ == '__main__':

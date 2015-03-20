@@ -14,7 +14,7 @@ def home(request):
 
 def protein(request):
     """Form for inputting a protein name and sequence."""
-    logger.debug(request)
+    # logger.debug(request)
     if request.method == 'POST':
         # After submission of the form the data is cleaned and if valid, the
         # data is added to the database.

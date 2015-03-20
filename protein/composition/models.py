@@ -10,9 +10,18 @@ class Protein(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
+        """
+        Overwrite django's save function to customize cleaning of the data
+        using my custom clean() function.
+        """
         self.full_clean()
         super(Protein, self).save(*args, **kwargs)
 
     def clean(self):
+        """
+        Cleans the data by removing whitespace and converting the sequence to
+        all uppercase.
+        """
         if self.sequence:
             self.sequence = re.sub(r"\s+", "", self.sequence)
+            self.sequence = self.sequence.upper()
