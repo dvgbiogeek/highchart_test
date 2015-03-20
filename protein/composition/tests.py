@@ -8,3 +8,6 @@ class HomePageTest(TestCase):
         """Test that home page renders the 'home.html' template."""
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'home.html')
+
+
+# class ProteinFormTest(TestCase):
