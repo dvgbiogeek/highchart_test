@@ -48,17 +48,6 @@ class ProteinFormTest(TestCase):
         self.assertIn(
             "Please add a name and sequence.", form.errors.as_ul())
 
-    # def test_form_page_redirects_after_POST(self):
-    #     request = HttpRequest()
-    #     data = {'name': 'test', 'sequence': 'MGDVEKGKKIFIMK'}
-    #     form = ProteinForm(data)
-    #     form.save()
-
-    #     response = protein(request)
-
-    #     self.assertEqual(response.status_code, 302)
-    #     self.assertEqual(response['location'], '/protein/1')  # % (instance.pk))
-
 
 class ProteinModelTest(TestCase):
 

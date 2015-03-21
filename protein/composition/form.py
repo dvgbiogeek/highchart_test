@@ -1,6 +1,5 @@
 from django import forms
 from composition.models import Protein
-# import re
 
 
 class ProteinForm(forms.ModelForm):

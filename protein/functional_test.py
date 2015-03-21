@@ -93,7 +93,7 @@ class SetUpTest(unittest.TestCase):
         # The page does not redirect to the success page
         current_url = self.browser.current_url
         self.assertEqual(current_url, 'http://localhost:8000/protein/')
-        
+
         # self.fail('More test!')
 
 

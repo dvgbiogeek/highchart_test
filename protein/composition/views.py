@@ -25,7 +25,7 @@ def protein(request):
             # instance is the data object
             instance = form.save()
             logger.debug(instance)
-            return HttpResponseRedirect('/protein/' + str(instance.pk))
+            return HttpResponseRedirect('/composition/' + str(instance.pk))
     else:
         # If not a POST request, generate a new instance of the form.
         form = ProteinForm()
@@ -43,6 +43,14 @@ def protein_detail(request, protein_id):
     return HttpResponse(protein_dict)
 
 
+def composition_detail(request, protein_id):
+    """
+    The url where highcharts will be used to show the data based on the protein
+    data submitted through the form.
+    """
+    return render(request, 'composition.html')
+
+
 def build_aa_dict(protein_id):
     """Generates a dictionary with the numbers of each amino acid."""
     aa = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P',
@@ -52,6 +60,15 @@ def build_aa_dict(protein_id):
     for a in aa:
         aa_content[a] = sequence.count(a)
     return aa_content
+
+
+def convert_dict_to_array(protein_id):
+    dict_list = []
+    prot_dict = build_aa_dict(protein_id)
+    for key, value in prot_dict.items():
+        temp = [key, value]
+        dict_list.append(temp)
+    return dict_list
 
 
 def build_protein_dict(protein_id):
@@ -64,7 +81,8 @@ def build_protein_dict(protein_id):
         'name': protein.name,
         'sequence': protein.sequence,
         'length': len(protein.sequence),
-        'amino acids': build_aa_dict(protein_id)
+        'amino acids': build_aa_dict(protein_id),
+        'amino': convert_dict_to_array(protein_id),
     }
     protein_json = json.dumps(protein_dict)
     return protein_json
