@@ -1,13 +1,12 @@
-<html>
-	<head>
-		<title>Welcome</title>
-	</head>
-	<body>
-		<h3>Welcome!</h3>
-		<div>
-			<input type="text" id="id_name_input" placeholder="Protein Name"><br><br>
-			<input type="text" id="id_sequence" placeholder="Protein Sequence">
-			<input type="submit" id="id_submit" value="Submit">
-		</div>
-	</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Welcome!</h3>
+<div>
+	<ul>
+		<li><a href="/protein/">Proteins into Components</a></li>
+	</ul>
+</div>
+
+{% endblock %}

@@ -1,10 +1,20 @@
-<html>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
 	<h3>Protein Form</h3>
-	<form action="" method="post">
-		{% csrf_token %}
-		{{ form }}
-		<input type="submit" value="submit" id="id_submit">
-	</form>
-</body>
-</html>
+	<div class="col-md-6">
+		<form name="ProteinForm" action="" method="post">
+			{% csrf_token %}
+			{% for field in form %}
+			<div class="form-group">
+				{{ field.label_tag }}
+				<br>
+				{{ field }}
+			</div>
+			{% endfor %}
+			<div>
+				<input type="submit" value="submit" id="id_submit" class="btn btn-default">
+			</div>	
+		</form>
+	</div>
+{% endblock %}

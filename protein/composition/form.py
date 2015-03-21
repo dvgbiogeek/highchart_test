@@ -9,9 +9,12 @@ class ProteinForm(forms.ModelForm):
         widgets = {
             'name': forms.fields.TextInput(attrs={
                 'placeholder': 'Protein Name',
+                'class': 'form-control',
                 }),
-            'sequence': forms.fields.TextInput(attrs={
+            'sequence': forms.Textarea(attrs={
                 'placeholder': 'Protein Sequence',
+                'class': 'form-control',
+                'type': 'textarea',
                 }),
         }
         error_messages = {

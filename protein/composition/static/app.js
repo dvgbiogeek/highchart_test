@@ -69,7 +69,7 @@ angular.module('proteinApp', [])
 								color: '#000000',
 								connectColor: '#000000',
 								formatter: function() {
-									return '<b>' + this.point.name + ' </b>';
+									return '<b>' + this.y + ' </b>';
 								}
 							}
 						}
