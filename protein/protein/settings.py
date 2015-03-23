@@ -96,7 +96,13 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
+        'file1': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'django.log',
+            'formatter': 'verbose'
+        },
+        'file2': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'protein.log',
@@ -105,12 +111,12 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file1'],
             'propagate': True,
             'level': 'DEBUG',
         },
         'composition': {
-            'handlers': ['file'],
+            'handlers': ['file2'],
             'level': 'DEBUG',
         },
     }

@@ -1,0 +1,3 @@
+- sizing and display of graph
+Done - update to test database in functional tests - 
+- setup karma for testing of angular module components

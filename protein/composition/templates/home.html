@@ -1,8 +1,12 @@
-<html>
-	<head>
-		<title>Welcome</title>
-	</head>
-	<body>
-	<h3>Test</h3>
-	</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Welcome!</h3>
+<div>
+	<ul>
+		<li><a href="/protein/">Proteins into Components</a></li>
+	</ul>
+</div>
+
+{% endblock %}

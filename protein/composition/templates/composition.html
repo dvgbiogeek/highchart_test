@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div ng-app="proteinApp">
+	<div ng-controller="AminoController">
+		<div>
+			<span ng-bind="proteinName"></span>
+		</div>
+		<div class='amino-bar' id="graph" items="details"></div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="../static/app.js"></script>
+
+{% endblock %}
