@@ -18,6 +18,6 @@ class ProteinForm(forms.ModelForm):
                 }),
         }
         error_messages = {
-            'name': {'required': 'Please add a name and sequence.'},
-            'sequence': {'required': 'Please add a name and sequence.'},
+            'name': {'required': 'Please add a name.'},
+            'sequence': {'required': 'Please add a sequence.'},
         }

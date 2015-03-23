@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 def home(request):
+    """Renders the home page."""
     logger.debug('Render home page')
     return render(request, 'home.html')
 
@@ -26,6 +27,9 @@ def protein(request):
             instance = form.save()
             logger.debug(instance)
             return HttpResponseRedirect('/composition/' + str(instance.pk))
+        else:
+            # Renders the errors if the form is not valid
+            return render(request, 'protein_form.html', {'form': form})
     else:
         # If not a POST request, generate a new instance of the form.
         form = ProteinForm()
@@ -63,6 +67,9 @@ def build_aa_dict(protein_id):
 
 
 def convert_dict_to_array(protein_id):
+    """
+    Converts amino acid data to an array as the series format for highcharts.
+    """
     dict_list = []
     prot_dict = build_aa_dict(protein_id)
     for key, value in prot_dict.items():

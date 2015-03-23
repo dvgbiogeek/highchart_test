@@ -19,9 +19,12 @@ Use logging to document bugs in the coding process and production
 
 Brainstorming about Structure
 Home page:
-	welcome
-	form for protein name and sequence
-		extras - link to NCBI for sequences, link for sample protein
+	welcome - 
+	links to developments with the site - protein breakdown, blog thing, resources for information (NCBI for example)
+
+Protein page	
+	form for protein name and sequence 
+		on sida add list of proteins already in the database
 	Form as a directive/Django form
 		if Django form - use python to parse the data prior to sending to the db or displaying data at a url
 		if Angular - use javascript to remove whitespace and send through tastypie for displaying
@@ -31,3 +34,5 @@ Page for displaying data - charts
 	extras - determine charge, determine potential phosporylation sites
 
 Hidden url for storing JSON of data for the chart to access
+
+Set up a blog like page with posts about the site 
