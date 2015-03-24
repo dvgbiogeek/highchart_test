@@ -33,8 +33,8 @@ angular.module('proteinApp', [])
 		function getProteins() {
 			ProteinListFactory.getList()
 				.success(function(data) {
-					$scope.proteinList = data;
-					console.log(data);
+					$scope.proteinList = data.objects;
+					console.log(data.objects);
 				})
 				.error(function() {
 					console.log('retrieval of data failed');
@@ -42,6 +42,7 @@ angular.module('proteinApp', [])
 		}
 
 		getProteins();
+		
 	}])
 
 	.controller('AminoController', ['$scope', 'AminoFactory', 

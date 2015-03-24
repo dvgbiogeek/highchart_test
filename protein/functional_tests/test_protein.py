@@ -5,6 +5,8 @@ import unittest
 
 class SetUpTest(StaticLiveServerTestCase):
 
+    fixtures = ['protein.json']
+
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
@@ -100,3 +102,18 @@ class SetUpTest(StaticLiveServerTestCase):
         # The page does not redirect to the success page
         current_url = self.browser.current_url
         self.assertEqual(current_url, self.live_server_url + '/protein/')
+
+    def test_can_view_protein_examples(self):
+        # Go to site (focus on protein route)
+        self.go_to_home_page()
+        self.go_to_protein_form()
+
+        # Find and click on link
+        link = self.browser.find_element_by_link_text('cytochrome c')
+        link.click()
+
+        # The clicking on the link directs to a different url and contains the
+        # word 'superoxide'
+        current_url = self.browser.current_url
+        self.assertRegex(current_url, 'composition/.+')
+        self.find_text_in_body('cytochrome c')
