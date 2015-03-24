@@ -12,6 +12,38 @@ angular.module('proteinApp', [])
 		return AminoFactory;
 	}])
 
+	.factory('ProteinListFactory', ['$http', function($http) {
+
+		var base = '/api/v1/protein/';
+		var ProteinListFactory = {};
+
+		ProteinListFactory.getList = function() {
+     	return $http.get(base);
+		};
+     
+     return ProteinListFactory;
+   
+	}])
+
+	.controller('listController', ['$scope', 'ProteinListFactory', 
+			function($scope, ProteinListFactory) {
+		console.log('controller');
+		var proteinList;
+
+		function getProteins() {
+			ProteinListFactory.getList()
+				.success(function(data) {
+					$scope.proteinList = data;
+					console.log(data);
+				})
+				.error(function() {
+					console.log('retrieval of data failed');
+				});
+		}
+
+		getProteins();
+	}])
+
 	.controller('AminoController', ['$scope', 'AminoFactory', 
 			function($scope, AminoFactory) {
 		// Gets the protein id from the URL

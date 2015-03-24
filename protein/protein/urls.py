@@ -16,6 +16,8 @@ urlpatterns = patterns('',
     url(r'^protein/(\d+)/$', 'composition.views.protein_detail', name='protein_detail'),
     url(r'^composition/(\d+)$', 'composition.views.composition_detail', name='composition_detail'),
 
+    # testing url
+    url(r'^thanks$', 'composition.views.thanks', name='thanks'),
     # tastypie api for data
     url(r'^api/', include(v1_api.urls)),
     # url(r'^blog/', include('blog.urls')),

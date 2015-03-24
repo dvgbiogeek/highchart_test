@@ -7,6 +7,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def thanks(request):
+    return render(request, 'thanks.html')
+
+
 def home(request):
     """Renders the home page."""
     logger.debug('Render home page')
