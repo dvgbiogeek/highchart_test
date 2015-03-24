@@ -121,3 +121,7 @@ LOGGING = {
         },
     }
 }
+
+TASTYPIE_DEFAULT_FORMATS = ['json']
+
+TASTYPIE_FULL_DEBUG = True

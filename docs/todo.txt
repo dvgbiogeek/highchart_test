@@ -1,3 +1,8 @@
 - sizing and display of graph
 Done - update to test database in functional tests - 
 - setup karma for testing of angular module components
+
+Done - add proteins to admin for deleting testing duplicates
+
+Done - setup Tastypie for contents of db
+	- for providing links to current proteins in db

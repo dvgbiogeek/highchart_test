@@ -100,6 +100,3 @@ class SetUpTest(StaticLiveServerTestCase):
         # The page does not redirect to the success page
         current_url = self.browser.current_url
         self.assertEqual(current_url, self.live_server_url + '/protein/')
-
-# if __name__ == '__main__':
-#     unittest.main()
