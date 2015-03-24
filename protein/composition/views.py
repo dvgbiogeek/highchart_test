@@ -93,3 +93,7 @@ def build_protein_dict(protein_id):
     }
     protein_json = json.dumps(protein_dict)
     return protein_json
+
+
+def thanks(request):
+    return render(request, 'thanks.html')
