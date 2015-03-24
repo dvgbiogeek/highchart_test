@@ -1,15 +1,4 @@
 - sizing and display of graph
 - setup karma for testing of angular module components
 
-
-Done - setup Tastypie for contents of db
-	- for providing links to current proteins in db
-
-Done - Controller sees data 
-Done - Display links to proteins in the db
 Convert to a directive?
-
-Done - Write functional tests for links on protein page
-	need fixture for tests
-
-Done - Write api unit tests
