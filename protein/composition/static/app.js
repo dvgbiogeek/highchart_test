@@ -1,4 +1,4 @@
-angular.module('proteinApp', [])
+angular.module('proteinApp', ['ngTable'])
 	// Factory gets the data from the url with the appropriate id
 	.factory('AminoFactory', ['$http', function($http) {
 
@@ -53,6 +53,7 @@ angular.module('proteinApp', [])
 
 		this.details = {};
 		this.proteinName = {};
+		this.proteinData = {};
 
 		// Calls the factory to retrive and store the data in the scope as details
 		function getProteinData() {
@@ -60,6 +61,8 @@ angular.module('proteinApp', [])
 				.success(function(data) {
 					$scope.details = data.amino;
 					$scope.proteinName = data.name;
+					$scope.proteinData = data.protein;
+					console.log(data.protein);
 				})
 				.error(function(error) {
 					console.log('Unable to get data');

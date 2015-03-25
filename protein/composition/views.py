@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
+from Bio.SeqUtils import ProtParam
 from composition.form import ProteinForm
 from composition.models import Protein
 import json
@@ -81,18 +82,36 @@ def convert_dict_to_array(protein_id):
 def build_protein_dict(protein_id):
     """
     Creates a json dictionary with the protein data for the name, sequence,
-    length, and amino acid breakdown.
+    data (length, molecular weight ...), and amino acid breakdown.
     """
     protein = Protein.objects.get(pk=protein_id)
     protein_dict = {
         'name': protein.name,
         'sequence': protein.sequence,
-        'length': len(protein.sequence),
-        'amino acids': build_aa_dict(protein_id),
+        'protein': protein_data(protein_id),
         'amino': convert_dict_to_array(protein_id),
     }
     protein_json = json.dumps(protein_dict)
     return protein_json
+
+
+def protein_data(protein_id):
+    """
+    Uses the Biopython package to get the molecular weight, length, and
+    isoelectric point of a protein and returns a dictionary of the data.
+    """
+    protein = Protein.objects.get(pk=protein_id)
+    seq = protein.sequence
+    # Initialize the Protein Analysis class using the sequence of the protein
+    # as a string
+    prot = ProtParam.ProteinAnalysis(seq)
+    data_dict = [
+        {'name': 'length', 'value': prot.length},
+        {'name': 'molecular weight', 'value': prot.molecular_weight()},
+        {'name': 'isoelectric point', 'value': prot.isoelectric_point()},
+        {'name': 'instability index', 'value': prot.instability_index()},
+    ]
+    return data_dict
 
 
 def thanks(request):
