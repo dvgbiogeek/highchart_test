@@ -6,17 +6,21 @@
 		<div class="text-center">
 			<h3><span ng-bind="proteinName"></span></h3>
 		</div>
-		<div class="row">
-			<div class="col-md-6">
+		<!-- <div class="row"> -->
+			<div class="col-md-offset-1 col-md-5">
 				<table ng-table class="table">
 				<tr ng-repeat="protein in proteinData">
-					<td data-title="'Characteristic'"><span ng-bind="protein.name"></span></td>
-					<td data-title="'Value'"><span ng-bind="protein.value"></span></td>
+					<td data-title="'Characteristic'"><span ng-bind="(protein.name)"></span></td>
+					<td data-title="'Value'"><span ng-bind="(protein.value | number:2)"></span></td>
 				</tr>
 				</table>
 			</div>
-			<div class="col-md-offset-6"> 
-				<div class='amino-bar' id="graph" items="details"></div>
+			<div class="col-md-4"> 
+				<div class='structure-bar' id="graph2" items="structure"></div>		
+		</div>
+		<div class="row">	
+			<div class="col-md-6"> 
+				<div class='amino-bar' id="graph1" items="details"></div>
 			</div>
 		</div>
 	</div>

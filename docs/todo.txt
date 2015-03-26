@@ -3,6 +3,3 @@
 
 Convert list controller to a directive?
 
-Done - Use Biopython to get protein data
-Done - Data accessible to dictionary for angular to access
-Done - Add table to composition to show length, weight, isoelectric point, instability

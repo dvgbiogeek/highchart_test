@@ -79,6 +79,15 @@ def convert_dict_to_array(protein_id):
     return dict_list
 
 
+def dict_to_array(protein_id):
+    array_list = []
+    secondary = secondary_structure_dict(protein_id)
+    for key, value in secondary.items():
+        temp = [key, value]
+        array_list.append(temp)
+    return array_list
+
+
 def build_protein_dict(protein_id):
     """
     Creates a json dictionary with the protein data for the name, sequence,
@@ -90,6 +99,7 @@ def build_protein_dict(protein_id):
         'sequence': protein.sequence,
         'protein': protein_data(protein_id),
         'amino': convert_dict_to_array(protein_id),
+        'secondary': dict_to_array(protein_id),
     }
     protein_json = json.dumps(protein_dict)
     return protein_json
@@ -106,12 +116,25 @@ def protein_data(protein_id):
     # as a string
     prot = ProtParam.ProteinAnalysis(seq)
     data_dict = [
-        {'name': 'length', 'value': prot.length},
-        {'name': 'molecular weight', 'value': prot.molecular_weight()},
-        {'name': 'isoelectric point', 'value': prot.isoelectric_point()},
-        {'name': 'instability index', 'value': prot.instability_index()},
+        {'name': 'Length', 'value': prot.length},
+        {'name': 'Molecular Weight', 'value': prot.molecular_weight()},
+        {'name': 'Isoelectric Point', 'value': prot.isoelectric_point()},
+        {'name': 'Instability Index', 'value': prot.instability_index()},
+        {'name': 'Aromacity', 'value': prot.aromaticity() * 100},
     ]
     return data_dict
+
+
+def secondary_structure_dict(protein_id):
+    protein = Protein.objects.get(pk=protein_id)
+    seq = protein.sequence
+    prot = ProtParam.ProteinAnalysis(seq)
+    structure = list(prot.secondary_structure_fraction())
+    # return structure
+    secondary = ['Helix', 'Turn', 'Sheet']
+    # for sec in secondary:
+    comp = dict(zip(secondary, structure))
+    return comp
 
 
 def thanks(request):
