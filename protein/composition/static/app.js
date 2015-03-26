@@ -66,7 +66,6 @@ angular.module('proteinApp', ['ngTable'])
 					$scope.proteinData = data.protein;
 					$scope.structure = data.secondary;
 					$scope.percent = data.aminoPercent;
-					console.log(data.aminoPercent);
 				})
 				.error(function(error) {
 					console.log('Unable to get data');
@@ -74,6 +73,7 @@ angular.module('proteinApp', ['ngTable'])
 		}
 
 		getProteinData();
+
 	}])
 
 	.directive('aminoBar', [function() {
@@ -147,13 +147,9 @@ angular.module('proteinApp', ['ngTable'])
 
 	.directive('percentBar', [function() {
 		return {
-			// if the chart does not appear the template says 'not working'
 			template: '<div id="container" style="margin: 0 auto">not working</div>',
-			// use the directive as a class (<div class="hc-bar">) within the template - based on restrict
 			restrict: 'C',
-			// the values passed in to the directive are treated as a JSON object - any changes in the parent scope will be made available to the directive.
 			scope: {
-				// "items" is an attribute in the HTML in the same div as the chart
 				items: '='
 			},
 			// defines the chart in the view
@@ -167,7 +163,7 @@ angular.module('proteinApp', ['ngTable'])
 						height: 300
 					},
 					title: {
-						text: 'Amino Acid Percents'
+						text: 'Amino Acid Percent'
 					},
 					tooltip: {
 						enabled: false
@@ -184,7 +180,6 @@ angular.module('proteinApp', ['ngTable'])
 							}
 						}
 					},
-					// Takes the first value of each object in the array and uses it for the categories on the x-axis
 					xAxis: {
 						categories: function() {
 							scope.items.forEach(function(arr) {
@@ -195,7 +190,6 @@ angular.module('proteinApp', ['ngTable'])
 					yAxis: {
 						title: 'percent of amino acid in protein'
 					},
-					// uses the 2nd value of each object in the array for the data
 					series: [{
 						type: 'column',
 						name: 'Amino Acids',
@@ -215,13 +209,9 @@ angular.module('proteinApp', ['ngTable'])
 	}])
 	.directive('structureBar', [function() {
 		return {
-			// if the chart does not appear the template says 'not working'
 			template: '<div id="container" style="margin: 0 auto">not working</div>',
-			// use the directive as a class (<div class="hc-bar">) within the template - based on restrict
 			restrict: 'C',
-			// the values passed in to the directive are treated as a JSON object - any changes in the parent scope will be made available to the directive.
 			scope: {
-				// "items" is an attribute in the HTML in the same div as the chart
 				items: '='
 			},
 			// defines the chart in the view
@@ -253,7 +243,6 @@ angular.module('proteinApp', ['ngTable'])
 							}
 						}
 					},
-					// Takes the first value of each object in the array and uses it for the categories on the x-axis
 					xAxis: {
 						categories: function() {
 							scope.items.forEach(function(arr) {
@@ -261,7 +250,6 @@ angular.module('proteinApp', ['ngTable'])
 							});
 						}
 					},
-					// uses the 2nd value of each object in the array for the data
 					series: [{
 						type: 'column',
 						name: 'Secondary Structure',

@@ -6,7 +6,7 @@
 		<div class="text-center">
 			<h3><span ng-bind="proteinName"></span></h3>
 		</div>
-		<!-- <div class="row"> -->
+		<div class="row">
 			<div class="col-md-offset-1 col-md-5">
 				<table ng-table class="table">
 				<tr ng-repeat="protein in proteinData">
@@ -17,14 +17,29 @@
 			</div>
 			<div class="col-md-4"> 
 				<div class='structure-bar' id="graph2" items="structure"></div>		
-		</div>
-		<div class="row">	
-			<div class="col-md-6"> 
-				<div class='amino-bar' id="graph1" items="details"></div>
 			</div>
-			<div class="col-md-6"> 
-				<div class='percent-bar' id="graph3" items="percent"></div>
+		</div>	
+		<div class="row">
+			<div class="col-md-offset-1 col-md-3">
+				<button id="button" class="btn btn-default" ng-click="aminoGraph = 'composition'">
+					Protein Composition
+				</button>
+				<button id="button" class="btn btn-default" ng-click="aminoGraph = 'percent'">
+					Percent
+				</button>
 			</div>
+		</div>	
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<div ng-switch="aminoGraph">
+					<div ng-switch-when="composition">
+						<div class='amino-bar' id="graph1" items="details"></div>
+					</div>
+					<div ng-switch-when="percent">
+						<div class='percent-bar' id="graph3" items="percent"></div>
+					</div>
+				</div>
+			</div>	
 		</div>
 	</div>
 </div>
