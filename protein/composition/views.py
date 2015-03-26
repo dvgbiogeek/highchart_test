@@ -50,8 +50,8 @@ def protein_detail(request, protein_id):
 
 def composition_detail(request, protein_id):
     """
-    The url where highcharts will be used to show the data based on the protein
-    data submitted through the form.
+    The url where highcharts and ng-Table are used to show the data based on
+    the sequence data submitted through the form.
     """
     return render(request, 'composition.html')
 
@@ -65,6 +65,73 @@ def build_aa_dict(protein_id):
     for a in aa:
         aa_content[a] = sequence.count(a)
     return aa_content
+
+
+def build_aa_percent(protein_id):
+    """Generates a dictionary with the percent of each amino acid."""
+    aa = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P',
+          'R', 'S', 'T', 'W', 'Y']
+    aa_content = {}
+    sequence = Protein.objects.get(pk=protein_id).sequence
+    seq_length = len(sequence)
+    for a in aa:
+        aa_content[a] = round(sequence.count(a)/seq_length*100, 1)
+    return aa_content
+
+
+def build_protein_dict(protein_id):
+    """
+    Creates a json dictionary with the protein data for the name, sequence,
+    data (length, molecular weight ...), and amino acid breakdown.
+    """
+    protein = Protein.objects.get(pk=protein_id)
+    protein_dict = {
+        'name': protein.name,
+        'sequence': protein.sequence,
+        'protein': protein_data(protein_id),
+        'amino': convert_dict_to_array(protein_id),
+        'aminoPercent': percent_array(protein_id),
+        'secondary': dict_to_array(protein_id),
+    }
+    protein_json = json.dumps(protein_dict)
+    return protein_json
+
+
+def protein_data(protein_id):
+    """
+    Uses the Biopython package to get the molecular weight, length, and
+    isoelectric point of a protein and returns a dictionary of the data. This
+    dictionary is used by ng-Table.
+    """
+    protein = Protein.objects.get(pk=protein_id)
+    seq = protein.sequence
+    # Initialize the Protein Analysis class using the sequence of the protein
+    # as a string
+    prot = ProtParam.ProteinAnalysis(seq)
+    data_dict = [
+        {'name': 'Length', 'value': prot.length},
+        {'name': 'Molecular Weight', 'value': prot.molecular_weight()},
+        {'name': 'Isoelectric Point', 'value': prot.isoelectric_point()},
+        {'name': 'Instability Index', 'value': prot.instability_index()},
+        {'name': 'Aromaticity', 'value': prot.aromaticity() * 100},
+        {'name': 'Hydrophobicity', 'value': prot.gravy()},
+    ]
+    return data_dict
+
+
+def secondary_structure_dict(protein_id):
+    protein = Protein.objects.get(pk=protein_id)
+    seq = protein.sequence
+    prot = ProtParam.ProteinAnalysis(seq)
+    structure = list(prot.secondary_structure_fraction())
+    rounded_structure = []
+    for e in structure:
+        rounded_structure.append(round(e, 2))
+    # return structure
+    secondary = ['Helix', 'Turn', 'Sheet']
+    # for sec in secondary:
+    comp = dict(zip(secondary, rounded_structure))
+    return comp
 
 
 def convert_dict_to_array(protein_id):
@@ -88,53 +155,13 @@ def dict_to_array(protein_id):
     return array_list
 
 
-def build_protein_dict(protein_id):
-    """
-    Creates a json dictionary with the protein data for the name, sequence,
-    data (length, molecular weight ...), and amino acid breakdown.
-    """
-    protein = Protein.objects.get(pk=protein_id)
-    protein_dict = {
-        'name': protein.name,
-        'sequence': protein.sequence,
-        'protein': protein_data(protein_id),
-        'amino': convert_dict_to_array(protein_id),
-        'secondary': dict_to_array(protein_id),
-    }
-    protein_json = json.dumps(protein_dict)
-    return protein_json
-
-
-def protein_data(protein_id):
-    """
-    Uses the Biopython package to get the molecular weight, length, and
-    isoelectric point of a protein and returns a dictionary of the data.
-    """
-    protein = Protein.objects.get(pk=protein_id)
-    seq = protein.sequence
-    # Initialize the Protein Analysis class using the sequence of the protein
-    # as a string
-    prot = ProtParam.ProteinAnalysis(seq)
-    data_dict = [
-        {'name': 'Length', 'value': prot.length},
-        {'name': 'Molecular Weight', 'value': prot.molecular_weight()},
-        {'name': 'Isoelectric Point', 'value': prot.isoelectric_point()},
-        {'name': 'Instability Index', 'value': prot.instability_index()},
-        {'name': 'Aromacity', 'value': prot.aromaticity() * 100},
-    ]
-    return data_dict
-
-
-def secondary_structure_dict(protein_id):
-    protein = Protein.objects.get(pk=protein_id)
-    seq = protein.sequence
-    prot = ProtParam.ProteinAnalysis(seq)
-    structure = list(prot.secondary_structure_fraction())
-    # return structure
-    secondary = ['Helix', 'Turn', 'Sheet']
-    # for sec in secondary:
-    comp = dict(zip(secondary, structure))
-    return comp
+def percent_array(protein_id):
+    p_array = []
+    percents = build_aa_percent(protein_id)
+    for key, value in percents.items():
+        temp = [key, value]
+        p_array.append(temp)
+    return p_array
 
 
 def thanks(request):
