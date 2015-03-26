@@ -1,4 +1,4 @@
-angular.module('proteinApp', [])
+angular.module('proteinApp', ['ngTable'])
 	// Factory gets the data from the url with the appropriate id
 	.factory('AminoFactory', ['$http', function($http) {
 
@@ -27,7 +27,7 @@ angular.module('proteinApp', [])
 
 	.controller('listController', ['$scope', 'ProteinListFactory', 
 			function($scope, ProteinListFactory) {
-		console.log('controller');
+		// console.log('controller');
 		var proteinList;
 
 		function getProteins() {
@@ -53,6 +53,9 @@ angular.module('proteinApp', [])
 
 		this.details = {};
 		this.proteinName = {};
+		this.proteinData = {};
+		this.structure = {};
+		this.percent = {};
 
 		// Calls the factory to retrive and store the data in the scope as details
 		function getProteinData() {
@@ -60,6 +63,9 @@ angular.module('proteinApp', [])
 				.success(function(data) {
 					$scope.details = data.amino;
 					$scope.proteinName = data.name;
+					$scope.proteinData = data.protein;
+					$scope.structure = data.secondary;
+					$scope.percent = data.aminoPercent;
 				})
 				.error(function(error) {
 					console.log('Unable to get data');
@@ -67,6 +73,7 @@ angular.module('proteinApp', [])
 		}
 
 		getProteinData();
+
 	}])
 
 	.directive('aminoBar', [function() {
@@ -84,10 +91,11 @@ angular.module('proteinApp', [])
 			link: function(scope, element, attrs) {
 				var chart = new Highcharts.Chart({
 					chart: {
-						renderTo: document.getElementById('graph'),
+						renderTo: document.getElementById('graph1'),
 						plotBackgroundColor: null,
 						plotBorderWidth: null,
 						plotShadow: false,
+						height: 300
 					},
 					title: {
 						text: 'Amino Acid Composition'
@@ -135,4 +143,128 @@ angular.module('proteinApp', [])
 				});
 			}
 		};
+	}])
+
+	.directive('percentBar', [function() {
+		return {
+			template: '<div id="container" style="margin: 0 auto">not working</div>',
+			restrict: 'C',
+			scope: {
+				items: '='
+			},
+			// defines the chart in the view
+			link: function(scope, element, attrs) {
+				var chart = new Highcharts.Chart({
+					chart: {
+						renderTo: document.getElementById('graph3'),
+						plotBackgroundColor: null,
+						plotBorderWidth: null,
+						plotShadow: false,
+						height: 300
+					},
+					title: {
+						text: 'Amino Acid Percent'
+					},
+					tooltip: {
+						enabled: false
+					},
+					plotOptions: {
+						column: {
+							dataLabels: {
+								enabled: true,
+								color: '#000000',
+								connectColor: '#000000',
+								formatter: function() {
+									return '<b>' + this.y + ' </b>';
+								}
+							}
+						}
+					},
+					xAxis: {
+						categories: function() {
+							scope.items.forEach(function(arr) {
+								arrValue.push(arr[0]);
+							});
+						}
+					},
+					yAxis: {
+						title: 'percent of amino acid in protein'
+					},
+					series: [{
+						type: 'column',
+						name: 'Amino Acids',
+						data: function() {
+							scope.items.forEach(function(arr) {
+								arrValue.push(arr[1]);
+							});
+						}
+					}]
+				});
+
+				scope.$watch('items', function(newValue) {
+					chart.series[0].setData(newValue, true);
+				});
+			}
+		};
+	}])
+	.directive('structureBar', [function() {
+		return {
+			template: '<div id="container" style="margin: 0 auto">not working</div>',
+			restrict: 'C',
+			scope: {
+				items: '='
+			},
+			// defines the chart in the view
+			link: function(scope, element, attrs) {
+				var chart = new Highcharts.Chart({
+					chart: {
+						renderTo: document.getElementById('graph2'),
+						plotBackgroundColor: null,
+						plotBorderWidth: null,
+						plotShadow: false,
+						height: 300,
+						width: 400
+					},
+					title: {
+						text: 'Secondary Structure Fraction'
+					},
+					tooltip: {
+						enabled: false
+					},
+					plotOptions: {
+						column: {
+							dataLabels: {
+								enabled: true,
+								color: '#000000',
+								connectColor: '#000000',
+								formatter: function() {
+									return '<b>' + this.y + ' </b>';
+								}
+							}
+						}
+					},
+					xAxis: {
+						categories: function() {
+							scope.items.forEach(function(arr) {
+								arrValue.push(arr[0]);
+							});
+						}
+					},
+					series: [{
+						type: 'column',
+						name: 'Secondary Structure',
+						data: function() {
+							scope.items.forEach(function(arr) {
+								arrValue.push(arr[1]);
+							});
+						}
+					}]
+				});
+
+				scope.$watch('items', function(newValue) {
+					chart.series[0].setData(newValue, true);
+				});
+			}
+		};
+
 	}]);
