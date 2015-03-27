@@ -3,7 +3,7 @@
 
 Convert list controller to a directive?
 
-Done - Have secondary fraction graph show fewer digits
-
-Done - set up percentages
-	Done - want to set up using ng-switch such that a button triggers the viewing of the percent values
+- start glossary
+	Done - link on home page to glossary
+	Provides descriptions for the calculations on proteins
+	Model - term and definition - need to be admin to add - only add through admin?

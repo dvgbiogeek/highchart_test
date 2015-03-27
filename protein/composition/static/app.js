@@ -20,8 +20,11 @@ angular.module('proteinApp', ['ngTable'])
 		ProteinListFactory.getList = function() {
      	return $http.get(base);
 		};
-     
-     return ProteinListFactory;
+    ProteinListFactory.getGlossary = function() {
+    	return $http.get('/api/v1/glossary/');
+    };
+
+    return ProteinListFactory;
    
 	}])
 
@@ -42,6 +45,26 @@ angular.module('proteinApp', ['ngTable'])
 		}
 
 		getProteins();
+		
+	}])
+
+	.controller('GlossaryController', ['$scope', 'ProteinListFactory',
+			function($scope, ProteinListFactory) {
+		console.log('glossary');
+		var glossary;
+
+		function getGlossaryList() {
+			ProteinListFactory.getGlossary()
+				.success(function(data) {
+					$scope.glossary = data.objects;
+					console.log(data.objects);
+				})
+				.error(function() {
+					console.log('error retrieving glossary terms');
+				});
+		}
+
+		getGlossaryList();
 		
 	}])
 

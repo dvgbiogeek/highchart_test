@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'composition',
     'functional_tests',
+    'glossary',
 )
 
 MIDDLEWARE_CLASSES = (

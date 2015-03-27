@@ -109,7 +109,7 @@ class SetUpTest(StaticLiveServerTestCase):
         self.go_to_protein_form()
 
         # Find and click on link
-        link = self.browser.find_element_by_link_text('cytochrome c')
+        link = self.browser.find_element_by_link_text('cytochrome c oxidase subunit 4 isoform 1')
         link.click()
 
         # The clicking on the link directs to a different url and contains the
@@ -117,3 +117,11 @@ class SetUpTest(StaticLiveServerTestCase):
         current_url = self.browser.current_url
         self.assertRegex(current_url, 'composition/.+')
         self.find_text_in_body('cytochrome c')
+
+        # It displays the amino acid composition graph
+        self.click_button('button_comp')
+        self.find_text_in_body('Amino Acid Composition')
+
+        # It displays the percent graph
+        self.click_button('button_percent')
+        self.find_text_in_body('Amino Acid Percent')
