@@ -1,9 +1,13 @@
 - sizing and display of graph
 - setup karma for testing of angular module components
 
-Convert list controller to a directive?
+- Convert list controller to a directive?
 
 - start glossary
 	Done - link on home page to glossary
-	Provides descriptions for the calculations on proteins
-	Model - term and definition - need to be admin to add - only add through admin?
+	Done - Model - term and definition
+	Done - Set up logging
+	Done - Set up functional test
+	1/2 - Set up unittest for model and Rest Api
+	Set up with markdown
+		own url - must be logged in to add

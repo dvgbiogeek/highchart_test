@@ -121,6 +121,10 @@ LOGGING = {
             'handlers': ['file2'],
             'level': 'DEBUG',
         },
+        'glossary': {
+            'handlers': ['file2'],
+            'level': 'DEBUG',
+        }
     }
 }
 

@@ -1,0 +1,11 @@
+[
+{
+  "fields": {
+    "term": "protein",
+    "definition": "globular string of amino acids",
+    "reference": "my butt"
+  },
+  "pk": 1,
+  "model": "glossary.glossary"
+}
+]
