@@ -8,6 +8,6 @@
 	Done - Model - term and definition
 	Done - Set up logging
 	Done - Set up functional test
-	1/2 - Set up unittest for model and Rest Api
+	Done - Set up unittest for model and Rest Api
 	Set up with markdown
 		own url - must be logged in to add
