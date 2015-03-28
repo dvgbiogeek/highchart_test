@@ -14,14 +14,15 @@ angular.module('proteinApp', ['ngTable'])
 
 	.factory('ProteinListFactory', ['$http', function($http) {
 
-		var base = '/api/v1/protein/';
+		var protBase = '/api/v1/protein/';
+		var glossBase = '/api/v1/glossary/';
 		var ProteinListFactory = {};
 
 		ProteinListFactory.getList = function() {
-     	return $http.get(base);
+     	return $http.get(protBase);
 		};
     ProteinListFactory.getGlossary = function() {
-    	return $http.get('/api/v1/glossary/');
+    	return $http.get(glossBase);
     };
 
     return ProteinListFactory;
@@ -98,6 +99,25 @@ angular.module('proteinApp', ['ngTable'])
 		getProteinData();
 
 	}])
+
+	.filter('markdown', ['$sce', function($sce) {
+		var converter = new Showdown.converter();
+		return function(value) {
+			var html = converter.makeHtml(value || ''); 
+			return $sce.trustAsHtml(html);
+		};
+	}])
+	// .directive('markdown', [function() {
+	// 	var converter = new Showdown.converter();
+	// 	return {
+	// 		restrict: 'A',
+	// 		link: function(scope, element, attrs) {
+	// 			console.log(element);
+	// 			var htmlText = converter.makeHtml(element.text());
+	// 			element.html(htmlText);
+	// 		}
+	// 	};
+	// }])
 
 	.directive('aminoBar', [function() {
 		return {

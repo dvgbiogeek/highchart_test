@@ -9,5 +9,5 @@
 	Done - Set up logging
 	Done - Set up functional test
 	Done - Set up unittest for model and Rest Api
-	Set up with markdown
+	Done - Set up with markdown
 		own url - must be logged in to add
