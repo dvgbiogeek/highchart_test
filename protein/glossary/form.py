@@ -15,6 +15,7 @@ class GlossaryForm(forms.ModelForm):
                 'placeholder': 'Term definition',
                 'class': 'form-control',
                 'type': 'textarea',
+                'ng-model': 'ctrl.mark',
                 }),
             'reference': forms.fields.TextInput(attrs={
                 'placeholder': 'Reference',

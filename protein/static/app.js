@@ -1,4 +1,4 @@
-angular.module('proteinApp', ['ngTable'])
+angular.module('proteinApp', ['ngTable', 'ngSanitize'])
 	// Factory gets the data from the url with the appropriate id
 	.factory('AminoFactory', ['$http', function($http) {
 
