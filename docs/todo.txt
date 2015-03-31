@@ -1,9 +1,14 @@
 - sizing and display of graph
 - setup karma for testing of angular module components
 
-Convert list controller to a directive?
+- Convert list controller to a directive?
 
-Done - Have secondary fraction graph show fewer digits
+- start glossary
 
-Done - set up percentages
-	Done - want to set up using ng-switch such that a button triggers the viewing of the percent values
+	Done - Set up new glossary form
+	- Log in to add content
+	Done - add information for markdown
+	Done - let user see resolving of markdown as they add input
+
+Done - Consolidate static files and urls
+

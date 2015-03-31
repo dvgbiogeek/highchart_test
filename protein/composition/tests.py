@@ -16,6 +16,11 @@ class HomePageTest(TestCase):
 
 class ProteinFormTest(TestCase):
 
+    def test_protein_form_renders(self):
+        """Test that '/protein/' renders the 'protein_form.html' template."""
+        response = self.client.get('/protein/')
+        self.assertTemplateUsed(response, 'protein_form.html')
+
     def test_protein_form_has_placeholder(self):
         """Tests if the form has the correct placeholder."""
         form = ProteinForm()
@@ -29,6 +34,10 @@ class ProteinFormTest(TestCase):
         self.assertEqual(Protein.objects.count(), 0)
 
     def test_form_can_submit_and_save_a_POST_request(self):
+        """
+        Tests that the form saves inputs to the database and that the entry is
+        retrievible.
+        """
         request = HttpRequest()
         data = {'name': 'test', 'sequence': 'MGDVEKGKKIFIMK'}
         form = ProteinForm(data)
@@ -41,12 +50,27 @@ class ProteinFormTest(TestCase):
         self.assertEqual(new_protein.name, 'test')
         self.assertEqual(new_protein.sequence, 'MGDVEKGKKIFIMK')
 
-    def test_form_validation_for_blank_inputs(self):
+    def test_form_validation_for_blank_sequence(self):
+        """
+        Tests that the form is not saved if a sequence is omitted, and that the
+        form throws an error telling the user to add a sequence.
+        """
         data = {'name': 'test', 'sequence': ''}
         form = ProteinForm(data)
         self.assertFalse(form.is_valid())
         self.assertIn(
-            "Please add a name and sequence.", form.errors.as_ul())
+            "Please add a sequence.", form.errors.as_ul())
+
+    def test_form_validation_for_blank_name(self):
+        """
+        Tests that the form is not saved if a name is omitted, and that the
+        form throws an error telling the user to add a name.
+        """
+        data = {'name': '', 'sequence': 'MGDVEKGKKIFIMK'}
+        form = ProteinForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertIn(
+            "Please add a name.", form.errors.as_ul())
 
 
 class ProteinModelTest(TestCase):

@@ -3,9 +3,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import unittest
 
 
-class SetUpTest(StaticLiveServerTestCase):
-
-    fixtures = ['protein.json']
+class BaseFunctionalTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -31,8 +29,13 @@ class SetUpTest(StaticLiveServerTestCase):
                 "Proteins into Components")
         link.click()
 
+
+class ProteinCompositionTest(BaseFunctionalTest):
+    """Functional test for the Composition App."""
+    fixtures = ['protein.json']
+
     def test_can_enter_data_into_form(self):
-        """Tests form on home page."""
+        """Tests form on protein page."""
         self.go_to_home_page()
         # Does the site "Welcome" you?
         self.find_text_in_body('Welcome!')
@@ -66,6 +69,10 @@ class SetUpTest(StaticLiveServerTestCase):
         # self.fail('Finish the test!')
 
     def test_cannot_add_empty_sequence(self):
+        """
+        Test for basic validation that the form does not submit without a
+        sequence.
+        """
         # some validation effort to make sure empty entries throw an error
         # go to site (focus on protein route)
         self.go_to_home_page()
@@ -86,6 +93,9 @@ class SetUpTest(StaticLiveServerTestCase):
         # self.fail('More test!')
 
     def test_cannot_add_empty_name(self):
+        """
+        Test for basic validation that the form does not submit without a name.
+        """
         # some validation effort to make sure empty entries throw an error
         # go to site (focus on protein route)
         self.go_to_home_page()
@@ -104,12 +114,15 @@ class SetUpTest(StaticLiveServerTestCase):
         self.assertEqual(current_url, self.live_server_url + '/protein/')
 
     def test_can_view_protein_examples(self):
+        """
+        Test that user can view data from proteins already in the database.
+        """
         # Go to site (focus on protein route)
         self.go_to_home_page()
         self.go_to_protein_form()
 
         # Find and click on link
-        link = self.browser.find_element_by_link_text('cytochrome c')
+        link = self.browser.find_element_by_link_text('cytochrome c oxidase subunit 4 isoform 1')
         link.click()
 
         # The clicking on the link directs to a different url and contains the
@@ -117,3 +130,28 @@ class SetUpTest(StaticLiveServerTestCase):
         current_url = self.browser.current_url
         self.assertRegex(current_url, 'composition/.+')
         self.find_text_in_body('cytochrome c')
+
+        # It displays the amino acid composition graph
+        self.click_button('button_comp')
+        self.find_text_in_body('Amino Acid Composition')
+
+        # It displays the percent graph
+        self.click_button('button_percent')
+        self.find_text_in_body('Amino Acid Percent')
+
+
+class GlossaryTest(BaseFunctionalTest):
+    """Functional Tests for the Glossary App."""
+    fixtures = ['glossary.json']
+
+    def test_view_glossary(self):
+        """Test if user can view glossary objects."""
+        # Go to the home page and click on the glossary link
+        self.go_to_home_page()
+        link = self.browser.find_element_by_link_text("Protein Glossary")
+        link.click()
+
+        # check at proper url and text matches an entry in the glossary model
+        current_url = self.browser.current_url
+        self.assertEqual(current_url, self.live_server_url + '/glossary/')
+        self.find_text_in_body('globular string of amino acids')

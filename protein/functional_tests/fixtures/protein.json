@@ -1,13 +1,5 @@
 [
 {
-  "pk": 1,
-  "model": "composition.protein",
-  "fields": {
-    "name": "cytochrome c",
-    "sequence": "MGDVEKGKKIFIMKCSQCHTVEKGGKHKTGPNLHGLFGRKTGQAPGYSYTAANKNKGIIWGEDTLMEYLE\r\nNPKKYIPGTKMIFVGIKKKEERADLIAYLKKATNE"
-  }
-},
-{
   "pk": 6,
   "model": "composition.protein",
   "fields": {

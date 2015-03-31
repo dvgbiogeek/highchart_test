@@ -1,4 +1,4 @@
-angular.module('proteinApp', ['ngTable'])
+angular.module('proteinApp', ['ngTable', 'ngSanitize'])
 	// Factory gets the data from the url with the appropriate id
 	.factory('AminoFactory', ['$http', function($http) {
 
@@ -6,6 +6,7 @@ angular.module('proteinApp', ['ngTable'])
 		var AminoFactory = {};
 
 		AminoFactory.getComp = function(aminoId) {
+			console.log(aminoId);
 			return $http.get(base + aminoId);
 		};
 
@@ -73,7 +74,8 @@ angular.module('proteinApp', ['ngTable'])
 			function($scope, AminoFactory) {
 		// Gets the protein id from the URL
 		var currentUrl = window.location.href;
-		var aminoId = currentUrl.split('/')[4];
+		var aminoId = currentUrl.split('/')[5];
+		console.log(currentUrl, aminoId);
 
 		this.details = {};
 		this.proteinName = {};
