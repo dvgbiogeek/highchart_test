@@ -4,10 +4,11 @@
 - Convert list controller to a directive?
 
 - start glossary
-	Done - link on home page to glossary
-	Done - Model - term and definition
-	Done - Set up logging
-	Done - Set up functional test
-	Done - Set up unittest for model and Rest Api
-	Done - Set up with markdown
-		own url - must be logged in to add
+
+	Done - Set up new glossary form
+	- Log in to add content
+	- add information for markdown
+	- let user see resolving of markdown as they add input
+
+Done - Consolidate static files and urls
+
