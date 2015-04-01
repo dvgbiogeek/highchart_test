@@ -17,8 +17,10 @@ def new(request):
         logger.debug(form)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('glossary/')
+            return HttpResponseRedirect('/glossary/')
         else:
+            # Shows previously inputs in the form with errors specific to
+            # invalid inputs
             return render(request, 'glossary_form.html', {'form': form})
     else:
         form = GlossaryForm()

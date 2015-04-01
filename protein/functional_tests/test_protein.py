@@ -25,9 +25,19 @@ class BaseFunctionalTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url)
 
     def go_to_protein_form(self):
+        self.go_to_home_page()
         link = self.browser.find_element_by_link_text(
                 "Proteins into Components")
         link.click()
+
+    def go_to_glossary(self):
+        self.go_to_home_page()
+        link = self.browser.find_element_by_link_text("Protein Glossary")
+        link.click()
+
+    def check_at_desired_url(self, url_extension):
+        current_url = self.browser.current_url
+        self.assertEqual(current_url, self.live_server_url + url_extension)
 
 
 class ProteinCompositionTest(BaseFunctionalTest):
@@ -44,8 +54,7 @@ class ProteinCompositionTest(BaseFunctionalTest):
         self.go_to_protein_form()
 
         # clicking the link redirects to the protein form
-        current_url = self.browser.current_url
-        self.assertEqual(current_url, self.live_server_url + '/protein/')
+        self.check_at_desired_url('/protein/')
         self.find_text_in_body('Protein Form')
 
         # After the welcome there is a form to enter content
@@ -66,7 +75,6 @@ class ProteinCompositionTest(BaseFunctionalTest):
         self.assertRegex(current_url, 'composition/.+')
 
         self.find_text_in_body('Cytochrome c')
-        # self.fail('Finish the test!')
 
     def test_cannot_add_empty_sequence(self):
         """
@@ -75,7 +83,7 @@ class ProteinCompositionTest(BaseFunctionalTest):
         """
         # some validation effort to make sure empty entries throw an error
         # go to site (focus on protein route)
-        self.go_to_home_page()
+        # self.go_to_home_page()
         self.go_to_protein_form()
 
         # Add a name, but no sequence
@@ -87,10 +95,7 @@ class ProteinCompositionTest(BaseFunctionalTest):
         self.find_text_in_body('Please add a sequence.')
 
         # The page does not redirect to the success page
-        current_url = self.browser.current_url
-        self.assertEqual(current_url, self.live_server_url + '/protein/')
-
-        # self.fail('More test!')
+        self.check_at_desired_url('/protein/')
 
     def test_cannot_add_empty_name(self):
         """
@@ -98,7 +103,7 @@ class ProteinCompositionTest(BaseFunctionalTest):
         """
         # some validation effort to make sure empty entries throw an error
         # go to site (focus on protein route)
-        self.go_to_home_page()
+        # self.go_to_home_page()
         self.go_to_protein_form()
 
         # Add a sequence, but no name
@@ -110,15 +115,14 @@ class ProteinCompositionTest(BaseFunctionalTest):
         self.find_text_in_body('Please add a name.')
 
         # The page does not redirect to the success page
-        current_url = self.browser.current_url
-        self.assertEqual(current_url, self.live_server_url + '/protein/')
+        self.check_at_desired_url('/protein/')
 
     def test_can_view_protein_examples(self):
         """
         Test that user can view data from proteins already in the database.
         """
         # Go to site (focus on protein route)
-        self.go_to_home_page()
+        # self.go_to_home_page()
         self.go_to_protein_form()
 
         # Find and click on link
@@ -144,14 +148,48 @@ class GlossaryTest(BaseFunctionalTest):
     """Functional Tests for the Glossary App."""
     fixtures = ['glossary.json']
 
-    def test_view_glossary(self):
+    def test_view_glossary_and_add_content(self):
         """Test if user can view glossary objects."""
         # Go to the home page and click on the glossary link
-        self.go_to_home_page()
-        link = self.browser.find_element_by_link_text("Protein Glossary")
-        link.click()
+        # self.go_to_home_page()
+        self.go_to_glossary()
 
         # check at proper url and text matches an entry in the glossary model
-        current_url = self.browser.current_url
-        self.assertEqual(current_url, self.live_server_url + '/glossary/')
+        self.check_at_desired_url('/glossary/')
         self.find_text_in_body('globular string of amino acids')
+
+        # Click on link for adding new content
+        new_link = self.browser.find_element_by_link_text('New glossary entry')
+        new_link.click()
+        self.check_at_desired_url('/glossary/new/')
+        self.find_text_in_body('Glossary Form')
+
+        # Check for Markdown Key
+        self.find_text_in_body('[More here]')
+
+        # Add glossary content
+        term_input = self.browser.find_element_by_id('id_term')
+        term_input.send_keys('term')
+        definition_input = self.browser.find_element_by_id('id_definition')
+        definition_input.send_keys('definition')
+        reference_input = self.browser.find_element_by_id('id_reference')
+        reference_input.send_keys('reference')
+        self.click_button('id_submit')
+
+        self.check_at_desired_url('/glossary/')
+        self.find_text_in_body('term')
+
+    def test_invalid_entry_triggers_error(self):
+        # self.go_to_home_page()
+        self.go_to_glossary()
+
+        self.browser.find_element_by_link_text('New glossary entry').click()
+
+        # enter term, but no definition or reference
+        term_input = self.browser.find_element_by_id('id_term')
+        term_input.send_keys('term')
+        self.click_button('id_submit')
+
+        self.check_at_desired_url('/glossary/new/')
+        self.find_text_in_body('Please add a definition to the glossary term')
+        self.find_text_in_body('A reference is required')

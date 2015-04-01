@@ -27,7 +27,7 @@ def protein(request):
             # instance is the data object
             instance = form.save()
             logger.debug(instance)
-            return HttpResponseRedirect('protein/composition/' + str(instance.pk))
+            return HttpResponseRedirect('/protein/composition/' + str(instance.pk))
         else:
             # Renders the errors if the form is not valid
             return render(request, 'protein_form.html', {'form': form})
