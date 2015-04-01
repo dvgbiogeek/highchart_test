@@ -83,7 +83,6 @@ class ProteinCompositionTest(BaseFunctionalTest):
         """
         # some validation effort to make sure empty entries throw an error
         # go to site (focus on protein route)
-        # self.go_to_home_page()
         self.go_to_protein_form()
 
         # Add a name, but no sequence
@@ -103,7 +102,6 @@ class ProteinCompositionTest(BaseFunctionalTest):
         """
         # some validation effort to make sure empty entries throw an error
         # go to site (focus on protein route)
-        # self.go_to_home_page()
         self.go_to_protein_form()
 
         # Add a sequence, but no name
@@ -122,7 +120,6 @@ class ProteinCompositionTest(BaseFunctionalTest):
         Test that user can view data from proteins already in the database.
         """
         # Go to site (focus on protein route)
-        # self.go_to_home_page()
         self.go_to_protein_form()
 
         # Find and click on link
@@ -151,7 +148,6 @@ class GlossaryTest(BaseFunctionalTest):
     def test_view_glossary_and_add_content(self):
         """Test if user can view glossary objects."""
         # Go to the home page and click on the glossary link
-        # self.go_to_home_page()
         self.go_to_glossary()
 
         # check at proper url and text matches an entry in the glossary model
@@ -176,13 +172,14 @@ class GlossaryTest(BaseFunctionalTest):
         reference_input.send_keys('reference')
         self.click_button('id_submit')
 
+        # Check the page redirects after submitting the form and contains the
+        # submitted form's content
         self.check_at_desired_url('/glossary/')
         self.find_text_in_body('term')
 
     def test_invalid_entry_triggers_error(self):
-        # self.go_to_home_page()
+        """Test that an invalid form entry produces an error."""
         self.go_to_glossary()
-
         self.browser.find_element_by_link_text('New glossary entry').click()
 
         # enter term, but no definition or reference

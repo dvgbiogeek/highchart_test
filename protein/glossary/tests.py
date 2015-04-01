@@ -73,7 +73,7 @@ class GlossaryFormTest(TestCase):
         self.assertIn(
             "Please add a definition to the glossary term.", form.errors.as_ul())
 
-    def test_form_validation_for_blank_definition(self):
+    def test_form_validation_for_blank_term(self):
         """
         Tests that the form is not saved if a reference is omitted, and that
         the form throws an error telling the user to add a sequence.
