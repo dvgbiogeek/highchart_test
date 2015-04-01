@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+
+<div class="col-md-6">
+	<h3>{% block form_header %}{% endblock %}</h3>
+	
+	{% block form %}{% endblock %} 
+	
+		{% csrf_token %}
+		{% for field in form %}
+		<div class="form-group">
+			{{ field.label_tag }}
+			<br>
+			{{ field }}
+		</div>
+		{% endfor %}
+		<div>
+			<input type="submit" value="Submit" id="id_submit" class="btn btn-default">
+		</div>
+		{% if form.errors %}
+		<div class="form-group has-error">
+			<div class="help-block">
+				{% block form_errors %}
+				{% endblock %}
+			</div>
+		</div>
+		{% endif %}
+	</form>
+</div>
+{% block other %}
+{% endblock %}
+
+{% endblock %}

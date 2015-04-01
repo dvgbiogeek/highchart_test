@@ -1,32 +1,26 @@
-{% extends 'base.html' %}
+{% extends 'form_base.html' %}
 
-{% block content %}
-<div class="col-md-6">
-	<h3>Glossary Form</h3>
-	<form name="GlossaryForm" action="" method="post">
-		{% csrf_token %}
-		{% for field in form %}
-		<div class="form-group">
-			{{ field.label_tag }}
-			<br>
-			{{ field }}
-		</div>
-		{% endfor %}
-		{% if form.errors %}
-		<div class="form-group has-error">
-			<div class="help-block">
-				{{ form.term.errors }}
-				{{ form.definition.errors }}
-				{{ form.reference.errors }}
-			</div>
-		</div>
-		{% endif %}
-		<div>
-			<input type="submit" value="submit" id="id_submit" class="btn btn-default">
-		</div>	
-	</form>
+{% block header %}{% endblock %}
+
+{% block form_header %}Glossary Form{% endblock %}
+
+{% block form %}
+<form name="GlossaryForm" 
+      method="post" 
+      action="">
+{% endblock %}
+
+{% block form_errors %}
+	{{ form.term.errors }}
+	{{ form.definition.errors }}
+	{{ form.reference.errors }}
+{% endblock %}
+
+{% block other %}
+<div>
 	<div class="preview"><span ng-bind-html="ctrl.mark | markdown"></span></div>
 </div>
+
 <div class="col-md-6">
 	<h3>### Markdown Key</h3>
 	<div>

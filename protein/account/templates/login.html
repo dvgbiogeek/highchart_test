@@ -1,0 +1,14 @@
+{% extends 'form_base.html' %}
+
+{% block header %}{% endblock %}
+
+{% block form_header %}Login{% endblock %}
+
+{% block form %}
+<form name="loginForm" 
+      method="post" 
+      action="{% url 'django.contrib.auth.views.login' %}">
+{% endblock %}
+
+{% block form_errors %}
+{% endblock %}

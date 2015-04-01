@@ -3,12 +3,8 @@
 
 - Convert list controller to a directive?
 
-- start glossary
+- Log in to add content
 
-	Done - Set up new glossary form
-	- Log in to add content
-	Done - add information for markdown
-	Done - let user see resolving of markdown as they add input
+Set up accounts
 
-Done - Consolidate static files and urls
 

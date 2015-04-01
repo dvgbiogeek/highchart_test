@@ -23,6 +23,12 @@ urlpatterns = patterns('',
     # Glossary
     url(r'^glossary/$', 'glossary.views.terms', name='terms'),
     url(r'^glossary/new/$', 'glossary.views.new', name='new'),
+
+    # accounts
+    url(r'^login/$', 'django.contrib.auth.views.login', {
+            'template_name': 'login.html'}),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {
+            'template_name': 'home.html'}),
     # testing url
     url(r'^thanks$', 'composition.views.thanks', name='thanks'),
     # tastypie api for data
