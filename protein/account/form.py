@@ -13,7 +13,8 @@ class UserForm(forms.ModelForm):
                 'class': 'form-control',
                 }),
             'password': forms.fields.TextInput(attrs={
-                'placeholder': 'Enter username',
+                'type': 'password',
+                'placeholder': 'Enter password',
                 'class': 'form-control',
                 })
         }

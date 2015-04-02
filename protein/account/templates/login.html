@@ -1,38 +1,16 @@
-{% extends "base.html" %}
+{% extends 'form_base.html' %}
 
-{% block header %}{% endblock %}
+{% block form_header %}Sign In{% endblock %}
 
-{% block content %}
-<div id="login-page">
-  <div class="container">
-    <div class="row">
+{% block form %}
+<form name="UserForm" 
+      method="post" 
+      action="">
+{% endblock %}
 
-      <div class="col-md-4">
-        <div>
-          <h3>Sign In</h3>
-        </div>
+{% block form_errors %}
+	Please enter a correct username and password.
+{% endblock %}
 
-        {% if form.errors %}
-        <div class="alert alert-danger">
-          Your username and password didn't match. Please try again.
-        </div>
-        {% endif %}
-        <form method="post" action="/login/">
-          {% csrf_token %}
-          <div class="form-group">
-          	<label>Username:</label>
-          	<input type="text" class="form-control" name="username" value=""/>
-          </div>
-          <div class="form-group">
-          	<label>Password:</label>
-          	<input type="password" class="form-control" name="password" value=""/>
-          </div>
-          <input type="submit" value="Login" class="btn btn-default"/>
-          <input type="hidden" name="next" value="{{ next }}" />
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock content %}
-
+{% block other %}
+{% endblock %}

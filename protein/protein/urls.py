@@ -28,9 +28,6 @@ urlpatterns = patterns('',
 
     # accounts
     url(r'^login/$', 'account.views.user_login', name='user_login'),
-        # {
-        #     'template_name': 'login.html',
-        #     'authentication_form': AuthenticateForm}),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {
             'template_name': 'home.html'}),
     # testing url
