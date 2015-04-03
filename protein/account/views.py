@@ -19,6 +19,7 @@ def user_login(request):
             logger.debug(form)
             return HttpResponseRedirect('/')
         else:
+            form = UserForm({'username': username, 'password': ''})
             return render(request, 'login.html', {'form': form})
     else:
         form = UserForm()

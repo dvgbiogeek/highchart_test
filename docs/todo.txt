@@ -5,6 +5,12 @@
 
 - Log in to add content
 
-Set up accounts
+Done - Set up accounts
+Done - Write login functional tests
+Done - Write unit tests for the login form
 
+Change background of table to white
+Display username in navbar once logged in
+
+Make new user form
 

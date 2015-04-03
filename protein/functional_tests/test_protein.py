@@ -39,6 +39,10 @@ class BaseFunctionalTest(StaticLiveServerTestCase):
         current_url = self.browser.current_url
         self.assertEqual(current_url, self.live_server_url + url_extension)
 
+    def enter_input(self, input_id, text):
+        find_element = self.browser.find_element_by_id(input_id)
+        find_element.send_keys(text)
+
 
 class ProteinCompositionTest(BaseFunctionalTest):
     """Functional test for the Composition App."""
@@ -86,8 +90,7 @@ class ProteinCompositionTest(BaseFunctionalTest):
         self.go_to_protein_form()
 
         # Add a name, but no sequence
-        name_input = self.browser.find_element_by_id('id_name')
-        name_input.send_keys('Cytochrome c')
+        self.enter_input('id_name', 'Cytochrome c')
         self.click_button('id_submit')
 
         # An error message occurs saying a sequence is needed to proceed
@@ -105,8 +108,7 @@ class ProteinCompositionTest(BaseFunctionalTest):
         self.go_to_protein_form()
 
         # Add a sequence, but no name
-        sequence_input = self.browser.find_element_by_id('id_sequence')
-        sequence_input.send_keys('MGDVEKGKKIFIMKCSQCHTVEKGGKHKT')
+        self.enter_input('id_sequence', 'MGDVEKGKKIFIMKCSQCHTVEKGGKHKT')
         self.click_button('id_submit')
 
         # An error message occurs saying a sequence is needed to proceed
@@ -164,12 +166,9 @@ class GlossaryTest(BaseFunctionalTest):
         self.find_text_in_body('[More here]')
 
         # Add glossary content
-        term_input = self.browser.find_element_by_id('id_term')
-        term_input.send_keys('term')
-        definition_input = self.browser.find_element_by_id('id_definition')
-        definition_input.send_keys('definition')
-        reference_input = self.browser.find_element_by_id('id_reference')
-        reference_input.send_keys('reference')
+        self.enter_input('id_term', 'term')
+        self.enter_input('id_definition', 'definition')
+        self.enter_input('id_reference', 'reference')
         self.click_button('id_submit')
 
         # Check the page redirects after submitting the form and contains the
@@ -183,10 +182,54 @@ class GlossaryTest(BaseFunctionalTest):
         self.browser.find_element_by_link_text('New glossary entry').click()
 
         # enter term, but no definition or reference
-        term_input = self.browser.find_element_by_id('id_term')
-        term_input.send_keys('term')
+        self.enter_input('id_term', 'term')
         self.click_button('id_submit')
 
         self.check_at_desired_url('/glossary/new/')
         self.find_text_in_body('Please add a definition to the glossary term')
         self.find_text_in_body('A reference is required')
+
+
+class LoginTest(BaseFunctionalTest):
+    """Functional tests for accounts."""
+    fixtures = ['user.json']
+
+    def test_login_and_logout(self):
+        """Test that logs in a user then logs out."""
+        self.go_to_home_page()
+        self.browser.find_element_by_link_text('Sign In').click()
+
+        # Login to site
+        self.check_at_desired_url('/login/')
+        self.enter_input('id_username', 'danielle')
+        self.enter_input('id_password', 'bunny')
+        self.click_button('id_submit')
+
+        # Check login was successful.
+        self.find_text_in_body('Logout')
+        self.check_at_desired_url('/')
+
+        self.browser.find_element_by_link_text('Logout').click()
+        self.find_text_in_body('Sign In')
+
+    def test_bad_password_fails_login(self):
+        """Test that the proper password is required to log in."""
+        self.go_to_home_page()
+        self.browser.find_element_by_link_text('Sign In').click()
+
+        # Enter wrong password displays an error and fails to login.
+        self.enter_input('id_username', 'danielle')
+        self.enter_input('id_password', 'bun')
+        self.click_button('id_submit')
+        self.find_text_in_body('Sign In')
+        self.find_text_in_body('Please enter a correct username and password.')
+
+        # Form maintains username, only add password. Then logs in with correct
+        # password.
+        pass_input = self.browser.find_element_by_id('id_password')
+        self.assertEqual(pass_input.get_attribute('placeholder'),
+                         'Enter password')
+        self.enter_input('id_password', 'bunny')
+        self.click_button('id_submit')
+        self.find_text_in_body('Logout')
+        self.check_at_desired_url('/')
