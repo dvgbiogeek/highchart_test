@@ -10,18 +10,31 @@ def user_login(request):
     """Custom user login with custom form."""
     if request.method == 'POST':
         form = UserForm(request.POST)
+        # Obtain username and password from the form for authenitcation
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         logger.debug(user)
+        # if user is known
         if user is not None:
             login(request, user)
             logger.debug(form)
-            return HttpResponseRedirect('/')
+            try:
+                # Get next url for redirect
+                current_url = request.META['HTTP_REFERER']
+                redirect_url = current_url.split('=')[1]
+                print(redirect_url)
+                # if no next parameter is in the url, redirect to the home page
+                if redirect_url == '':
+                    return HttpResponseRedirect('/')
+                else:
+                    return HttpResponseRedirect(redirect_url)
+            except:
+                print('No redirect url')
+                return HttpResponseRedirect('/')
         else:
             form = UserForm({'username': username, 'password': ''})
             return render(request, 'login.html', {'form': form})
     else:
         form = UserForm()
-        logger.debug(form)
     return render(request, 'login.html', {'form': form})

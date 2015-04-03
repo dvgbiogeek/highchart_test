@@ -6,6 +6,7 @@
 <form name="UserForm" 
       method="post" 
       action="">
+	<input type="hidden" name="next" value="{{ next }}" />
 {% endblock %}
 
 {% block form_errors %}

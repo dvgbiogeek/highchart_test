@@ -9,8 +9,10 @@ Done - Set up accounts
 Done - Write login functional tests
 Done - Write unit tests for the login form
 
-Change background of table to white
-Display username in navbar once logged in
+Done - Change background of table to white
+Done - Display username in navbar once logged in
 
+Done - Make redirect go to url of interest
+Done - Add home link to navbar
 Make new user form
 
