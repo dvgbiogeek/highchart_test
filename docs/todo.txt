@@ -5,14 +5,8 @@
 
 - Log in to add content
 
-Done - Set up accounts
-Done - Write login functional tests
-Done - Write unit tests for the login form
+Done - Redo ft for glossary
 
-Done - Change background of table to white
-Done - Display username in navbar once logged in
-
-Done - Make redirect go to url of interest
-Done - Add home link to navbar
+Done - Fix unittests for glossary
 Make new user form
 

@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.http import HttpRequest
 from glossary.models import Glossary
 from glossary.views import new
@@ -15,12 +15,19 @@ class GlossaryViewTest(TestCase):
 
 class GlossaryFormTest(TestCase):
 
+    fixtures = ['user.json']
+
+    def setUp(self):
+        """Setup the test client such that it is already logged in."""
+        self.client = Client()
+        self.client.post('/login/', {'username': 'danielle', 'password': 'bunny'})
+
     def test_glossary_form_renders(self):
         """Test that '/glossary/new/' renders the 'glossary_form.html' template."""
         response = self.client.get('/glossary/new/')
         self.assertTemplateUsed(response, 'glossary_form.html')
 
-    def test_protein_form_has_placeholder(self):
+    def test_glossary_form_has_placeholder(self):
         """Tests if the form has the correct placeholder."""
         form = GlossaryForm()
         self.assertIn('placeholder="New term"', form.as_p())
@@ -29,8 +36,7 @@ class GlossaryFormTest(TestCase):
 
     def test_form_saves_only_when_necessary(self):
         """Tests the form to make sure it does not submit without an input."""
-        request = HttpRequest()
-        new(request)
+        request = self.client.get('/glossary/new/')
         self.assertEqual(Glossary.objects.count(), 0)
 
     def test_form_can_submit_and_save_a_POST_request(self):
@@ -38,12 +44,10 @@ class GlossaryFormTest(TestCase):
         Tests that the form saves inputs to the database and that the entry is
         retrievible.
         """
-        request = HttpRequest()
+        request = self.client.get('/glossary/new/')
         data = {'term': 'test', 'definition': 'definition', 'reference': 'yep'}
         form = GlossaryForm(data)
         form.save()
-
-        response = new(request)
 
         self.assertEqual(Glossary.objects.count(), 1)
         new_term = Glossary.objects.first()

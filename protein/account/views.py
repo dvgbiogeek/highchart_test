@@ -23,14 +23,13 @@ def user_login(request):
                 # Get next url for redirect
                 current_url = request.META['HTTP_REFERER']
                 redirect_url = current_url.split('=')[1]
-                print(redirect_url)
                 # if no next parameter is in the url, redirect to the home page
                 if redirect_url == '':
                     return HttpResponseRedirect('/')
                 else:
                     return HttpResponseRedirect(redirect_url)
             except:
-                print('No redirect url')
+                logger.debug('No redirect url')
                 return HttpResponseRedirect('/')
         else:
             form = UserForm({'username': username, 'password': ''})

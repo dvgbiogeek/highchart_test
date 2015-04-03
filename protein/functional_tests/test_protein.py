@@ -145,7 +145,7 @@ class ProteinCompositionTest(BaseFunctionalTest):
 
 class GlossaryTest(BaseFunctionalTest):
     """Functional Tests for the Glossary App."""
-    fixtures = ['glossary.json']
+    fixtures = ['glossary.json', 'user.json']
 
     def test_view_glossary_and_add_content(self):
         """Test if user can view glossary objects."""
@@ -159,6 +159,12 @@ class GlossaryTest(BaseFunctionalTest):
         # Click on link for adding new content
         new_link = self.browser.find_element_by_link_text('New glossary entry')
         new_link.click()
+
+        # Login is required for adding new entries to the glossary
+        self.check_at_desired_url('/login/?next=/glossary/new/')
+        self.enter_input('id_username', 'danielle')
+        self.enter_input('id_password', 'bunny')
+        self.click_button('id_submit')
         self.check_at_desired_url('/glossary/new/')
         self.find_text_in_body('Glossary Form')
 
@@ -181,6 +187,12 @@ class GlossaryTest(BaseFunctionalTest):
         self.go_to_glossary()
         self.browser.find_element_by_link_text('New glossary entry').click()
 
+        # Login is required for adding new entries to the glossary
+        self.check_at_desired_url('/login/?next=/glossary/new/')
+        self.enter_input('id_username', 'danielle')
+        self.enter_input('id_password', 'bunny')
+        self.click_button('id_submit')
+
         # enter term, but no definition or reference
         self.enter_input('id_term', 'term')
         self.click_button('id_submit')
@@ -200,7 +212,7 @@ class LoginTest(BaseFunctionalTest):
         self.browser.find_element_by_link_text('Sign In').click()
 
         # Login to site
-        self.check_at_desired_url('/login/')
+        self.check_at_desired_url('/login/?next=')
         self.enter_input('id_username', 'danielle')
         self.enter_input('id_password', 'bunny')
         self.click_button('id_submit')
