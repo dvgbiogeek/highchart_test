@@ -6,9 +6,25 @@
 		<title>Protein Playground</title>
 	</head>
 	<body>
-		
-		{% block header %}
-		{% endblock %}
+		<nav class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+      	<p class="navbar-text navbar-left">
+      		<a href="/">Home</a> | 
+      		{% if user.is_authenticated %}
+      		Hello {{ user.username }}!
+      		{% else %}
+      		Welcome!
+      		{% endif %}
+      	</p>
+        <p class="navbar-text navbar-right">
+        	{% if user.is_authenticated %}
+			<a href="/logout">Logout</a>
+			{% else %}
+			<a href="/login/?next={{request.path}}">Sign In</a>
+			{% endif %}
+        </p>
+      </div>
+    </nav>
 
 		<div ng-app="proteinApp">
 

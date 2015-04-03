@@ -1,9 +1,17 @@
 body {
 	padding: 10px;
+	background-color: #ECFAFF;
+}
+a {
+	color: #5B828C;
+}
+.navbar {
+	background-color: #ECFAFF;
 }
 .ng-table {
 	padding-top: 10px;
 	border: 1px solid #000;
+	background-color: #FFFFFF;
 }
 .amino-bar {
 	padding: 5px;

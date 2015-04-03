@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from glossary.form import GlossaryForm
 import logging
 logger = logging.getLogger(__name__)
@@ -10,6 +11,7 @@ def terms(request):
     return render(request, 'glossary.html')
 
 
+@login_required
 def new(request):
     """Form for adding a new glossary term to the app."""
     if request.method == 'POST':

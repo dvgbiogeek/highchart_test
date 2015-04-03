@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 
-{% block header %}
+{% block content %}
 <div class="text-center">
 	<h3>Glossary</h3>
 </div>
-{% endblock %}
 
-{% block content %}
 <div ng-controller="GlossaryController">
 {% verbatim %}
 <div ng-repeat="gloss in glossary">

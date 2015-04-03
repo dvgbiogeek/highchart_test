@@ -1,0 +1,17 @@
+{% extends 'form_base.html' %}
+
+{% block form_header %}Sign In{% endblock %}
+
+{% block form %}
+<form name="UserForm" 
+      method="post" 
+      action="">
+	<input type="hidden" name="next" value="{{ next }}" />
+{% endblock %}
+
+{% block form_errors %}
+	Please enter a correct username and password.
+{% endblock %}
+
+{% block other %}
+{% endblock %}

@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'composition',
     'functional_tests',
     'glossary',
+    'account',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -129,6 +130,10 @@ LOGGING = {
         'glossary': {
             'handlers': ['file2'],
             'level': 'DEBUG',
+        },
+        'account': {
+            'handlers': ['file2'],
+            'level': 'DEBUG',
         }
     }
 }
@@ -136,3 +141,5 @@ LOGGING = {
 TASTYPIE_DEFAULT_FORMATS = ['json']
 
 TASTYPIE_FULL_DEBUG = True
+
+LOGIN_URL = '/login/'
