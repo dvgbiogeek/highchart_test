@@ -1,0 +1,19 @@
+{% extends 'form_base.html' %}
+
+{% block form_header %}New Account{% endblock %}
+
+{% block form %}
+<form name="CreateNewForm" 
+      method="post" 
+      action="">
+{% endblock %}
+
+{% block form_errors %}
+	{{ form.email.errors }}
+	{{ form.username.errors }}
+	{{ form.password1.errors }}
+	{{ form.password2.errors }}
+{% endblock %}
+
+{% block other %}
+{% endblock %}

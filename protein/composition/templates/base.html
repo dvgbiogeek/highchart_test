@@ -20,6 +20,7 @@
         	{% if user.is_authenticated %}
 			<a href="/logout">Logout</a>
 			{% else %}
+			<a href="/new_user/">New Account</a> | 
 			<a href="/login/?next={{request.path}}">Sign In</a>
 			{% endif %}
         </p>

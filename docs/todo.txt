@@ -3,10 +3,7 @@
 
 - Convert list controller to a directive?
 
-- Log in to add content
+Done - Add link on base.html for new account
 
-Done - Redo ft for glossary
-
-Done - Fix unittests for glossary
-Make new user form
+Done - Make new user form / view
 
