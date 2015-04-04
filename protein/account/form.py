@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
-# from django.contrib.auth.forms import AuthenticationForm
 
 
 class UserForm(forms.ModelForm):
@@ -38,7 +37,7 @@ class CreateNewForm(forms.ModelForm):
                 'placeholder': 'Confirm password'}))
     error_messages = {
         'password_mismatch': _('The two password fields did not match.'),
-        'duplicate_username': _('A user with this username already exists'),
+        'duplicate_username': _('A user with this username already exists.'),
     }
 
     class Meta:

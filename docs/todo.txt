@@ -3,7 +3,5 @@
 
 - Convert list controller to a directive?
 
-Done - Add link on base.html for new account
-
-Done - Make new user form / view
+Done - Tests for new form
 

@@ -43,6 +43,11 @@ class BaseFunctionalTest(StaticLiveServerTestCase):
         find_element = self.browser.find_element_by_id(input_id)
         find_element.send_keys(text)
 
+    def login_user(self, username, password):
+        self.enter_input('id_username', username)
+        self.enter_input('id_password', password)
+        self.click_button('id_submit')
+
 
 class ProteinCompositionTest(BaseFunctionalTest):
     """Functional test for the Composition App."""
@@ -162,9 +167,7 @@ class GlossaryTest(BaseFunctionalTest):
 
         # Login is required for adding new entries to the glossary
         self.check_at_desired_url('/login/?next=/glossary/new/')
-        self.enter_input('id_username', 'danielle')
-        self.enter_input('id_password', 'bunny')
-        self.click_button('id_submit')
+        self.login_user('danielle', 'bunny')
         self.check_at_desired_url('/glossary/new/')
         self.find_text_in_body('Glossary Form')
 
@@ -189,9 +192,7 @@ class GlossaryTest(BaseFunctionalTest):
 
         # Login is required for adding new entries to the glossary
         self.check_at_desired_url('/login/?next=/glossary/new/')
-        self.enter_input('id_username', 'danielle')
-        self.enter_input('id_password', 'bunny')
-        self.click_button('id_submit')
+        self.login_user('danielle', 'bunny')
 
         # enter term, but no definition or reference
         self.enter_input('id_term', 'term')
@@ -213,11 +214,10 @@ class LoginTest(BaseFunctionalTest):
 
         # Login to site
         self.check_at_desired_url('/login/?next=')
-        self.enter_input('id_username', 'danielle')
-        self.enter_input('id_password', 'bunny')
-        self.click_button('id_submit')
+        self.login_user('danielle', 'bunny')
 
         # Check login was successful.
+        self.find_text_in_body('Hello danielle!')
         self.find_text_in_body('Logout')
         self.check_at_desired_url('/')
 
@@ -230,9 +230,7 @@ class LoginTest(BaseFunctionalTest):
         self.browser.find_element_by_link_text('Sign In').click()
 
         # Enter wrong password displays an error and fails to login.
-        self.enter_input('id_username', 'danielle')
-        self.enter_input('id_password', 'bun')
-        self.click_button('id_submit')
+        self.login_user('danielle', 'bun')
         self.find_text_in_body('Sign In')
         self.find_text_in_body('Please enter a correct username and password.')
 
@@ -243,5 +241,37 @@ class LoginTest(BaseFunctionalTest):
                          'Enter password')
         self.enter_input('id_password', 'bunny')
         self.click_button('id_submit')
+        self.find_text_in_body('Logout')
+        self.check_at_desired_url('/')
+
+
+class NewUserTest(BaseFunctionalTest):
+
+    def test_new_user_can_make_an_account(self):
+        """Test new users can make an account then login."""
+        self.go_to_home_page()
+        self.browser.find_element_by_link_text('New Account').click()
+
+        # Check at '/new_user/' url to make an account
+        self.check_at_desired_url('/new_user/')
+        self.find_text_in_body('Username')
+
+        # First enter information with mismatched passwords to throw an error.
+        self.enter_input('id_username', 'danielle')
+        self.enter_input('id_email', 'd@g.com')
+        self.enter_input('id_password1', 'bunny')
+        self.enter_input('id_password2', 'bun')
+        self.click_button('id_submit')
+        self.find_text_in_body('The two password fields did not match.')
+
+        # Reenter passwords and submit makes an account and redirects to the
+        # login page
+        self.enter_input('id_password1', 'bunny')
+        self.enter_input('id_password2', 'bunny')
+        self.click_button('id_submit')
+
+        # User can mow login which redirects to the home page
+        self.check_at_desired_url('/login/')
+        self.login_user('danielle', 'bunny')
         self.find_text_in_body('Logout')
         self.check_at_desired_url('/')

@@ -15,7 +15,6 @@ def user_login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        # user = Userform.clean()
         logger.debug(user)
         # if user is known
         if user is not None:
@@ -42,11 +41,12 @@ def user_login(request):
 
 
 def new_user(request):
+    """Adds a new user to the database."""
     if request.method == 'POST':
         form = CreateNewForm(request.POST)
-        print(form.as_p())
         if form.is_valid():
             new_user = form.save()
+            logger.debug('new user added')
             return HttpResponseRedirect('/login/')
         else:
             return render(request, 'new_user.html', {'form': form})
