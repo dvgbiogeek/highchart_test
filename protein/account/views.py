@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
-from account.form import UserForm
+from django.forms import ValidationError
+from account.form import UserForm, CreateNewForm
 import logging
 logger = logging.getLogger(__name__)
 
@@ -37,3 +38,18 @@ def user_login(request):
     else:
         form = UserForm()
     return render(request, 'login.html', {'form': form})
+
+
+def new_user(request):
+    """Adds a new user to the database."""
+    if request.method == 'POST':
+        form = CreateNewForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            logger.debug('new user added')
+            return HttpResponseRedirect('/login/')
+        else:
+            return render(request, 'new_user.html', {'form': form})
+    else:
+        form = CreateNewForm()
+    return render(request, 'new_user.html', {'form': form})

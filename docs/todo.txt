@@ -3,10 +3,9 @@
 
 - Convert list controller to a directive?
 
-- Log in to add content
+Done - Tests for new form
 
-Done - Redo ft for glossary
-
-Done - Fix unittests for glossary
-Make new user form
-
+Testing Deployment
+Heroku deployment setup
+	- Procfile
+	- gunicorn
