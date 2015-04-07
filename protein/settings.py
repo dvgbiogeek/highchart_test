@@ -117,19 +117,25 @@ LOGGING = {
             'filename': 'protein.log',
             'formatter': 'verbose'
         },
+        'syslog': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.SysLogHandler',
+            'formatter': 'verbose',
+            'address': ('frozen-stream-5430.papertrailapp.com', 11111)
+        }
     },
     'loggers': {
         'django': {
-            'handlers': ['file1'],
+            'handlers': ['syslog'],
             'propagate': True,
             'level': 'DEBUG',
         },
         'composition': {
-            'handlers': ['file2'],
+            'handlers': ['syslog'],
             'level': 'DEBUG',
         },
         'glossary': {
-            'handlers': ['file2'],
+            'handlers': ['syslog'],
             'level': 'DEBUG',
         },
         'account': {
