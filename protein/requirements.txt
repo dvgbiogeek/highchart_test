@@ -2,8 +2,10 @@ Django==1.7.6
 SQLAlchemy==0.9.9
 biopython==1.65
 dj-database-url==0.3.0
+dj-static==0.0.6
 django-postgrespool==0.3.0
 django-tastypie==0.12.1
+django-toolbelt==0.0.1
 ecdsa==0.13
 gnureadline==6.3.3
 gunicorn==19.3.0
@@ -15,4 +17,5 @@ python-dateutil==2.4.1
 python-mimeparse==0.1.4
 selenium==2.45.0
 six==1.9.0
+static3==0.5.1
 whitenoise==1.0.6
