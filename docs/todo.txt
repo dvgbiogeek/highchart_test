@@ -5,3 +5,7 @@
 
 Done - Tests for new form
 
+Testing Deployment
+Heroku deployment setup
+	- Procfile
+	- gunicorn
