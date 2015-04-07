@@ -1,1 +1,1 @@
-web: gunicorn protein.protein.wsgi --log-file -
+web: gunicorn protein.wsgi --log-file -
