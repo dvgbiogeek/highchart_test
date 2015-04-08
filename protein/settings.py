@@ -139,7 +139,7 @@ LOGGING = {
             'level': 'DEBUG',
         },
         'account': {
-            'handlers': ['file2'],
+            'handlers': ['syslog'],
             'level': 'DEBUG',
         }
     }
