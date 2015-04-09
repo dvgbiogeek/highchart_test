@@ -3,9 +3,20 @@
 
 - Convert list controller to a directive?
 
-Done - Tests for new form
+Done - Heroku deployment setup
+	Done - Procfile
+	Done - gunicorn
 
-Testing Deployment
-Heroku deployment setup
-	- Procfile
-	- gunicorn
+Set up resources page
+	Done - gives user information about where to get the data for their protein - static
+	Done - link from home page
+
+Done - Change settings for production vs local
+
+Localization
+	KDEL - ER
+	KKXX - transmembranal
+	hydrophobic - n-terminal 5-30 aa - secretory pathway
+	nls - 5 basic positively charged - KR[PAATKKAGQA]KKKK (bipartite) or K-K/R-X-K/R (monopartite)
+	nes - LxxxLxxLxL, where "L" is a hydrophobic residue 
+	mitochondrial - amphipathic helix at n-terminal

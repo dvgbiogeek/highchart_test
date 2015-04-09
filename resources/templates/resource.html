@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Resources</h3>
+<h5>For general information</h5>
+<ul>
+	<li><a href="http://www.ncbi.nlm.nih.gov/">The National Center for Biotechnology Information</a> provides information to everything biology including DNA, RNA, and protein sequences, as well as any literature associated with genes and proteins</li>
+</ul>
+<h5>Don't know what protein to try</h5>
+<ul>
+	<li><a href="http://www.ncbi.nlm.nih.gov/pubmed">A literature search</a> can help give some ideas. Type in something biology related and a search will show more information than is useful. Weird acronyms all in caps are likely (not always) the names of candidate genes or proteins.</li>
+</ul>
+<h5>If you have a protein in mind</h5>
+<ul>
+	<li><a href="http://www.ncbi.nlm.nih.gov/protein">The Protein Resource</a> - Type in the protein name in the search bar and select the species (human is homo sapiens) then select one from the list. Under the name click on FASTA which will provide the sequence and some other metadata. The sequence is all caps.</li>
+</ul>
+{% endblock %}

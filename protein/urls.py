@@ -4,6 +4,7 @@ from django.contrib import admin
 from account.views import user_login, new_user
 from composition.views import home, protein, protein_detail, composition_detail
 from glossary.views import terms, new
+from resources.views import resource
 # from account.form import AuthenticateForm
 
 from tastypie.api import Api
@@ -26,11 +27,14 @@ urlpatterns = patterns('',
     url(r'^glossary/$', 'glossary.views.terms', name='terms'),
     url(r'^glossary/new/$', 'glossary.views.new', name='new'),
 
-    # accounts
+    # Accounts
     url(r'^login/$', 'account.views.user_login', name='user_login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {
             'template_name': 'home.html'}),
     url(r'^new_user/$', 'account.views.new_user', name='new_user'),
+    
+    # Resources
+    url(r'resource/$', 'resources.views.resource', name='resource'),
     # testing url
     url(r'^thanks$', 'composition.views.thanks', name='thanks'),
     # tastypie api for data
