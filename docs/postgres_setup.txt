@@ -1,0 +1,30 @@
+####
+Integrating with django
+
+For using postgres with python
+(venv)$ pip install psycopg2
+
+In pgAdmin3
+Databases --> New Database
+    name = protein
+
+changes to settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': ‘protein’,
+        'USER': 'danielleglick',
+        'PASSWORD': 'aw3edr5',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }
+}
+
+$ python manage.py syncdb
+Operations to perform:
+  Apply all migrations: admin, contenttypes, sessions, auth
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying sessions.0001_initial... OK

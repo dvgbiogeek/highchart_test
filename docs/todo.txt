@@ -12,6 +12,9 @@ Set up resources page
 	Done - link from home page
 
 Done - Change settings for production vs local
+- set up environmental variables for heroku compatibility
+
+Done - change local db to postgres
 
 Localization
 	KDEL - ER

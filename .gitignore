@@ -5,3 +5,4 @@ venv/
 protein/static/admin/*
 protein/static/libs/*
 */migrations/*
+protein/settings/local_settings.py
