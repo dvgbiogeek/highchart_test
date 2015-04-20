@@ -3,18 +3,6 @@
 
 - Convert list controller to a directive?
 
-Done - Heroku deployment setup
-	Done - Procfile
-	Done - gunicorn
-
-Set up resources page
-	Done - gives user information about where to get the data for their protein - static
-	Done - link from home page
-
-Done - Change settings for production vs local
-- set up environmental variables for heroku compatibility
-
-Done - change local db to postgres
 
 Localization
 	KDEL - ER
@@ -23,3 +11,18 @@ Localization
 	nls - 5 basic positively charged - KR[PAATKKAGQA]KKKK (bipartite) or K-K/R-X-K/R (monopartite)
 	nes - LxxxLxxLxL, where "L" is a hydrophobic residue 
 	mitochondrial - amphipathic helix at n-terminal
+
+	Amino Acids
+	Hydrophobic - alanine, valine, phenyalanine, proline, leucine, isoleucine - A, V, F, P, L, I
+	Hydrophilic - arginine, aspartic acid, glutamic acid, serine, threonine,cysteine, glutamine, asparagine, histadine
+	Amphipathic (properties of both hydrophobic and hydrophilic)- threonine, lysine, tyrosine, methionine, tryptophan
+
+	+ Charge - rh
+	- Charge - de
+
+Set up as a table
+
+Nucleus
+Endoplasmic Reticulum
+Secretory Pathway
+Cytoplasm

@@ -4,6 +4,7 @@ from Bio.SeqUtils import ProtParam
 from composition.form import ProteinForm
 from composition.models import Protein
 import json
+import re
 import logging
 logger = logging.getLogger(__name__)
 
@@ -92,6 +93,7 @@ def build_protein_dict(protein_id):
         'amino': convert_dict_to_array(protein_id),
         'aminoPercent': percent_array(protein_id),
         'secondary': dict_to_array(protein_id),
+        'localization': localization(protein_id),
     }
     protein_json = json.dumps(protein_dict)
     return protein_json
@@ -117,6 +119,89 @@ def protein_data(protein_id):
         {'name': 'Hydrophobicity', 'value': prot.gravy()},
     ]
     return data_dict
+
+
+def localization(protein_id):
+    protein = Protein.objects.get(pk=protein_id)
+    seq = protein.sequence
+    data_dict = [
+        {'name': 'Nucleus', 'value': nucleus(seq)},
+        {'name': 'Secretory Pathway', 'value': er_localization(seq)},
+        {'name': 'Cytoplasm', 'value': cytoplasm(seq)},
+    ]
+    return data_dict
+
+
+def cytoplasm(seq):
+    if secretory_pathway(seq):
+        return "Since this protein is synthesized in the ER, it is unlikely to be found in the cytoplasm"
+    elif nls(seq):
+        return "Many nuclear proteins shuttle between the cytoplasm and nucleus"
+    else:
+        return "This protein is likely found in the cytoplasm, but could also be localized to mitochondria"
+
+
+def secretory_pathway(seq):
+    n_term = seq[:45]
+    pattern = re.compile(r'[AFILPV]{5,}')
+    other = re.compile(r'[AFILPV]{4}.{,2}[AFILPV]{3,}')
+    match = pattern.search(n_term)
+    alt_match = other.search(n_term)
+    if match or alt_match:
+        # return the matching sequence and index
+        return True
+    else:
+        return False
+
+
+def er_localization(seq):
+    if secretory_pathway(seq):
+        if er_only(seq):
+            return "Endoplasmic reticulum localization only"
+        elif transmembrane_only(seq):
+            return "Protein is likely within the membrane of the ER"
+        else:
+            return "Protein is part of the secretory pathway"
+    else:
+        return "Not a secretory pathway protein"
+
+
+def er_only(seq):
+    """Returns True if 'KDEL' is in the sequence."""
+    if 'KDEL' in seq[-10:] or 'HDEL' in seq[-10:]:
+        return True
+    else:
+        return False
+
+
+def transmembrane_only(seq):
+    c_term = seq[-10:]
+    pattern = re.compile(r'[K]{2}.{2}')
+    match = pattern.search(c_term)
+    if match:
+        return True
+    else:
+        return False
+
+
+def nls(seq):
+    monopartite = re.compile(r'[K][KR].{1}[KR]')
+    bipartite = re.compile(r'[KR]{2}.{8,10}[KR]{3,5}')
+    match1 = monopartite.search(seq)
+    match2 = bipartite.search(seq)
+    if match1 or match2:
+        return True
+    else:
+        return False
+
+
+def nucleus(seq):
+    if secretory_pathway(seq) and nls(seq):
+        return "Synthesized in the ER, unlikely to be in the nucleus."
+    elif nls(seq) is True:
+        return "Found in the nucleus"
+    else:
+        return "Does not contain the standard nuclear localization signal"
 
 
 def secondary_structure_dict(protein_id):

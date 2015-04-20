@@ -6,7 +6,7 @@ angular.module('proteinApp', ['ngTable'])
 		var AminoFactory = {};
 
 		AminoFactory.getComp = function(aminoId) {
-			return $http.get(base + aminoId);
+			return $http.get(base + aminoId + '/');
 		};
 
 		return AminoFactory;
@@ -80,17 +80,21 @@ angular.module('proteinApp', ['ngTable'])
 		this.proteinData = {};
 		this.structure = {};
 		this.percent = {};
+		this.cell = {};
 
 		// Calls the factory to retrive and store the data in the scope as details
 		function getProteinData() {
 			AminoFactory.getComp(aminoId)
 				.success(function(data) {
+					console.log('data is');
 					$scope.details = data.amino;
 					$scope.proteinName = data.name;
 					$scope.proteinData = data.protein;
 					$scope.structure = data.secondary;
 					$scope.percent = data.aminoPercent;
+					$scope.cell = data.localization;
 				})
+				
 				.error(function(error) {
 					console.log('Unable to get data');
 				});

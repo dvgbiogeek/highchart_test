@@ -14,8 +14,13 @@
 				</tr>
 				</table>
 			</div>
-			<div class="col-md-4"> 
-				<div class='structure-bar' id="graph2" items="structure"></div>		
+			<div class="col-md-5">
+				<table ng-table class="table">
+				<tr ng-repeat="local in cell">
+					<td data-title="'Place'"><span ng-bind="local.name"></span></td>
+					<td data-title="'Where Found'"><span ng-bind="local.value"></span></td>
+				</tr>
+				</table>
 			</div>
 		</div>	
 		<div class="row">
@@ -40,6 +45,11 @@
 				</div>
 			</div>	
 		</div>
+<!-- 		<div class="row">
+			<div class="col-md-4"> 
+				<div class='structure-bar' id="graph2" items="structure"></div>		
+			</div>
+		</div> -->
 	</div>
 </div>
 
